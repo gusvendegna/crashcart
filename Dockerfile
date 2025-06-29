@@ -1,4 +1,4 @@
-# ---------- Stage 1: Build MJPG-Streamer ----------
+# BUILD
 FROM alpine:3.20 AS builder
 
 RUN apk add --no-cache \
@@ -18,7 +18,7 @@ WORKDIR /build/mjpg-streamer/mjpg-streamer-experimental
 
 RUN make
 
-# ---------- Stage 2: Minimal Runtime ----------
+# CONSOLIDATE
 FROM alpine:3.20
 
 RUN apk add --no-cache \
@@ -34,4 +34,7 @@ COPY static/index.html /www/index.html
 ENV LD_LIBRARY_PATH=/usr/lib
 EXPOSE 8080
 
-CMD ["mjpg_streamer", "-i", "/usr/lib/input_uvc.so -d /dev/video0 -r 1280x720 -f 30", "-o", "/usr/lib/output_http.so -w /www"]
+ENV RESOLUTION=1280x720
+ENV FRAMERATE=30
+
+CMD ["sh", "-c", "mjpg_streamer -i \"/usr/lib/input_uvc.so -d /dev/video0 -r $RESOLUTION -f $FRAMERATE\" -o \"/usr/lib/output_http.so -w /www\""]
