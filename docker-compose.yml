@@ -1,6 +1,6 @@
 services:
   crashcart:
-    build: .
+    image: ghcr.io/gusvendegna/crashcart:latest
     container_name: crashcart
     ports:
       - "8080:8080"
