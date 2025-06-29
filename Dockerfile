@@ -1,27 +1,36 @@
-FROM debian:bullseye
+# ---------- Stage 1: Build MJPG-Streamer ----------
+FROM alpine:3.20 AS builder
 
-RUN apt-get update && \
-    apt-get install -y \
-        build-essential \
-        libjpeg-dev \
-        imagemagick \
-        ffmpeg \
-        libv4l-dev \
-        cmake \
-        git \
-        curl && \
-    git clone https://github.com/jacksonliam/mjpg-streamer.git && \
-    cd mjpg-streamer/mjpg-streamer-experimental && \
-    make && \
-    cp *.so /usr/local/lib/ && \
-    cp -r www /usr/local/ && \
-    chmod +x mjpg_streamer && cp mjpg_streamer /usr/local/bin/
+RUN apk add --no-cache \
+    build-base \
+    cmake \
+    linux-headers \
+    git \
+    libjpeg-turbo-dev \
+    v4l-utils
 
 
+WORKDIR /build
 
+RUN git clone --depth=1 https://github.com/jacksonliam/mjpg-streamer.git
 
+WORKDIR /build/mjpg-streamer/mjpg-streamer-experimental
+
+RUN make
+
+# ---------- Stage 2: Minimal Runtime ----------
+FROM alpine:3.20
+
+RUN apk add --no-cache \
+    libjpeg-turbo \
+    v4l-utils \
+    ffmpeg
+
+COPY --from=builder /build/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer /usr/bin/
+COPY --from=builder /build/mjpg-streamer/mjpg-streamer-experimental/*.so /usr/lib/
+COPY --from=builder /build/mjpg-streamer/mjpg-streamer-experimental/www /www
+
+ENV LD_LIBRARY_PATH=/usr/lib
 EXPOSE 8080
 
-ENV LD_LIBRARY_PATH=/usr/local/lib
-
-CMD ["mjpg_streamer", "-i", "/usr/local/lib/input_uvc.so -d /dev/video0 -r 1280x720 -f 30", "-o", "/usr/local/lib/output_http.so -w /usr/loca>
+CMD ["mjpg_streamer", "-i", "/usr/lib/input_uvc.so -d /dev/video0 -r 1280x720 -f 30", "-o", "/usr/lib/output_http.so -w /www"]
