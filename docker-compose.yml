@@ -6,4 +6,4 @@ services:
       - "8080:8080"
     devices:
       - "/dev/video0:/dev/video0"
-    restart: unless-stopped
+    restart: unless-stoppeddd
