@@ -29,6 +29,7 @@ RUN apk add --no-cache \
 COPY --from=builder /build/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer /usr/bin/
 COPY --from=builder /build/mjpg-streamer/mjpg-streamer-experimental/*.so /usr/lib/
 COPY --from=builder /build/mjpg-streamer/mjpg-streamer-experimental/www /www
+COPY static/index.html /www/index.html
 
 ENV LD_LIBRARY_PATH=/usr/lib
 EXPOSE 8080
