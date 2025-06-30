@@ -1,4 +1,4 @@
-# 🧰 Crash Cart
+# 🛒 Crash Cart
 
 **Crash Cart** is a plug-and-play HDMI capture streamer in a Docker container. Designed for IT admins, makers, and hardware wranglers, it lets you view the screen of any HDMI device (server, SBC, camera, console) through a web browser—no monitor required.
 
@@ -24,14 +24,19 @@ Just plug in a USB HDMI capture device, run the container, and view the live fee
 
 2. **Run the container:**
 
-```bash
-docker run --rm -it \
-  --device=/dev/video0 \
-  --privileged \
-  -p 8080:8080 \
-  -e RESOLUTION=1280x720 \
-  -e FRAMERATE=30 \
-  ghcr.io/<your-username>/crash-cart:latest
+```yaml
+services:
+  crashcart:
+    image: ghcr.io/gusvendegna/crashcart:latest
+    container_name: crashcart
+    ports:
+      - "8080:8080"
+    devices:
+      - "/dev/video0:/dev/video0"
+    environment:
+      - RESOLUTION=1280x720
+      - FRAMERATE=30
+    restart: unless-stopped
 ```
 
 3. **Open your browser:**
@@ -85,8 +90,4 @@ To restrict access, consider:
 ## 📚 Credits
 
 - MJPG-Streamer by [jacksonliam](https://github.com/jacksonliam/mjpg-streamer)
-- Maintained & packaged by [Your Name or Org]
-
----
-
-Let me know if you want to generate badges (Docker pulls, GitHub CI, license, etc.), add screenshots or GIF previews, or publish this to Docker Hub or GHCR with proper tags. You’ve just built yourself a portable IT life-saver. 🖥️🔌🌍
+- Maintained & packaged by [@gusvendegna]
