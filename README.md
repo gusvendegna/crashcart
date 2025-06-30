@@ -1,8 +1,3 @@
-Absolutely—here’s a polished `README.md` tailored for your MJPG-streamer-based HDMI-over-IP project, now officially called **Crash Cart** 🚑🎥
-
----
-
-```markdown
 # 🧰 Crash Cart
 
 **Crash Cart** is a plug-and-play HDMI capture streamer in a Docker container. Designed for IT admins, makers, and hardware wranglers, it lets you view the screen of any HDMI device (server, SBC, camera, console) through a web browser—no monitor required.
@@ -91,7 +86,6 @@ To restrict access, consider:
 
 - MJPG-Streamer by [jacksonliam](https://github.com/jacksonliam/mjpg-streamer)
 - Maintained & packaged by [Your Name or Org]
-```
 
 ---
 
