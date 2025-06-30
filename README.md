@@ -2,13 +2,13 @@
 
 **Crash Cart** is a plug-and-play HDMI capture streamer in a Docker container. Designed for IT admins, makers, and hardware wranglers, it lets you view the screen of any HDMI device (server, SBC, camera, console) through a web browser—no monitor required.
 
-Just plug in a USB HDMI capture device, run the container, and view the live feed from any device on your network.
+I created this project because I needed a lightweight and FREE way to view the screen of a device in my server rack with out actually hooking up a screen or new device of any kind.
 
 ---
 
 ## 📦 Features
 
-- 🔌 Zero-config: auto-detects `/dev/video` capture devices
+- 🔌 Zero-config: set your `/dev/videoX` capture device and go!
 - 🌐 Web UI: stream available at `http://<ip>:8080/`
 - ⚡ Fast load time with ultra-minimal Alpine base (~50MB image)
 - 🔁 MJPEG stream via HTTP (instant preview in most browsers)
@@ -58,14 +58,8 @@ Done. You’re now streaming live.
 
 ---
 
-## 🛠️ Build Locally
-
-```bash
-docker buildx build \
-  --platform linux/arm/v7 \
-  -t crash-cart:local \
-  --load .
-```
+## 🛠️ Development Roadmap
+Eventually, I want this to be a "pikvm" in a container. I know that an unoffical container of exatly that exists, but I think I can make something distinct and better. My next task is to determine a method to actually interact with the taget device. 
 
 ---
 
