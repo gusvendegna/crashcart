@@ -11,6 +11,7 @@ I created this project because I needed a lightweight and FREE way to view the s
 - 🔌 Zero-config: set your `/dev/videoX` capture device and go!
 - 🌐 Web UI: stream available at `http://<ip>:8080/`
 - ⚡ Fast load time with ultra-minimal Alpine base (~50MB image)
+- ⚡ Low footprint. Can run on literally anything that can handle a container, or your money back!
 - 🔁 MJPEG stream via HTTP (instant preview in most browsers)
 - 🔧 Configurable resolution & frame rate using environment variables
 - 🐳 Multi-arch support (`armv7`, `amd64`)—works on Raspberry Pi, Jetson, etc.
